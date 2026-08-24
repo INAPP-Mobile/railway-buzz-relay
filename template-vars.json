@@ -24,6 +24,16 @@
     "description": "S3 secret key. Auto-wired from the sibling 'minio' service.",
     "isOptional": false
   },
+  "AWS_ACCESS_KEY_ID": {
+    "defaultValue": "${{minio.MINIO_ROOT_USER}}",
+    "description": "AWS-compatible access key for S3 media storage. Auto-wired from the sibling 'minio' service.",
+    "isOptional": false
+  },
+  "AWS_SECRET_ACCESS_KEY": {
+    "defaultValue": "${{minio.MINIO_ROOT_PASSWORD}}",
+    "description": "AWS-compatible secret key for S3 media storage. Auto-wired from the sibling 'minio' service.",
+    "isOptional": false
+  },
   "BUZZ_S3_BUCKET": {
     "defaultValue": "buzz-media",
     "description": "S3 bucket name for media storage.",

@@ -1,23 +1,23 @@
 {
   "DATABASE_URL": {
-    "value": "postgresql://postgres:***@postgres.railway.internal:5432/buzz",
-    "description": "PostgreSQL connection URL to the sibling 'postgres' service (postgres:16-alpine). Literal credentials match the defaults in postgres/template-vars.json so marketplace first-time deploys authenticate out of the box."
+    "value": "postgresql://${{postgres.POSTGRES_USER}}:$${{postgres.POSTGRES_PASSWORD}}@${{postgres.RAILWAY_PRIVATE_DOMAIN}}:5432/${{postgres.POSTGRES_DB}}",
+    "description": "PostgreSQL connection URL. Auto-wired from the sibling 'postgres' service via companion variable references."
   },
   "REDIS_URL": {
-    "value": "redis://:***@redis.railway.internal:6379",
-    "description": "Redis connection URL to the sibling 'redis' service. Literal credentials match the defaults in redis/template-vars.json so marketplace first-time deploys authenticate out of the box."
+    "value": "redis://${{redis.RAILWAY_PRIVATE_DOMAIN}}:6379",
+    "description": "Redis connection URL. Auto-wired from the sibling 'redis' service over Railway's project-isolated private network (no password needed)."
   },
   "BUZZ_S3_ENDPOINT": {
-    "value": "http://minio.railway.internal:9000",
+    "value": "http://${{minio.RAILWAY_PRIVATE_DOMAIN}}:8080",
     "description": "S3 endpoint for media storage. Points to the sibling 'minio' service."
   },
   "BUZZ_S3_ACCESS_KEY": {
-    "value": "minioadmin",
-    "description": "S3 access key. Matches the default in minio/template-vars.json."
+    "value": "${{minio.MINIO_ROOT_USER}}",
+    "description": "S3 access key. Auto-wired from the sibling 'minio' service."
   },
   "BUZZ_S3_SECRET_KEY": {
-    "value": "minioadmin",
-    "description": "S3 secret key. Matches the default in minio/template-vars.json."
+    "value": "${{minio.MINIO_ROOT_PASSWORD}}",
+    "description": "S3 secret key. Auto-wired from the sibling 'minio' service."
   },
   "BUZZ_S3_BUCKET": {
     "value": "buzz-media",
@@ -39,8 +39,28 @@
     "value": "true",
     "description": "Automatically run database migrations on startup."
   },
-  "BUZZ_GIT_CONFORMANCE_PROBE": {
-    "value": "true",
-    "description": "Enable git conformance probe on startup."
+  "BUZZ_GIT_REPO_PATH": {
+    "value": "/data/git",
+    "description": "Filesystem path where git repositories are stored. Must match the volume mount path."
+  },
+  "BUZZ_HEALTH_PORT": {
+    "value": "8080",
+    "description": "Port for the health check endpoint."
+  },
+  "BUZZ_METRICS_PORT": {
+    "value": "9102",
+    "description": "Port for Prometheus metrics endpoint."
+  },
+  "BUZZ_BIND_ADDR": {
+    "value": "0.0.0.0:3000",
+    "description": "Address and port the relay listens on."
+  },
+  "RUST_LOG": {
+    "value": "buzz_relay=info,buzz_db=info,buzz_auth=info,buzz_pubsub=info,tower_http=info",
+    "description": "Rust log level configuration."
+  },
+  "PORT": {
+    "value": "3000",
+    "description": "HTTP port for the relay."
   }
 }

@@ -1,6 +1,6 @@
 {
   "DATABASE_URL": {
-    "value": "postgresql://${{postgres.POSTGRES_USER}}:$${{postgres.POSTGRES_PASSWORD}}@${{postgres.RAILWAY_PRIVATE_DOMAIN}}:5432/${{postgres.POSTGRES_DB}}",
+    "value": "postgresql://${{postgres.POSTGRES_USER}}:${{postgres.POSTGRES_PASSWORD}}@${{postgres.RAILWAY_PRIVATE_DOMAIN}}:5432/${{postgres.POSTGRES_DB}}",
     "description": "PostgreSQL connection URL. Auto-wired from the sibling 'postgres' service via companion variable references."
   },
   "REDIS_URL": {

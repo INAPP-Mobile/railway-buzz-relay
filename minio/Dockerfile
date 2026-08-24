@@ -7,6 +7,8 @@ FROM minio/minio:latest
 # IMPORTANT: Railway does NOT expand ${PORT} inside Dockerfile CMD.
 # The start command MUST use a hardcoded port. Port 8080 is the default
 # MinIO API port; 9001 is the console.
+#
+# Cache-bust: 2
 
 VOLUME /data
 

@@ -1,7 +1,30 @@
-# Buzz Relay — Railway Zero-Config Template
+# Deploy and Host
 
-Deploy a fully-functional Nostr relay with Buzz on Railway in one click.
-No manual configuration needed — all secrets auto-generated.
+## About Hosting
+
+Buzz Relay is a Nostr relay with built-in Git hosting over Nostr (NIP-89). It lets you push and pull Git repositories through the Nostr protocol, with media uploads stored on S3-compatible object storage.
+
+## Why Deploy
+
+- **One-click Nostr relay** — fully configured with auto-generated secrets
+- **Git over Nostr** — push/pull repos via NIP-89 compatible clients
+- **Media storage** — S3-compatible object storage for blobs and attachments
+- **Zero-config** — all credentials auto-generated, services auto-wired
+
+## Common Use Cases
+
+- Self-hosted Nostr relay for personal or community use
+- Git repository hosting over the Nostr protocol
+- Decentralized code collaboration with Nostr identity
+- Media storage for Nostr events and attachments
+
+## Dependencies for Buzz Relay
+
+### Deployment Dependencies
+
+- **PostgreSQL** — database for relay state and metadata
+- **Redis** — pub/sub cache for real-time event distribution
+- **MinIO** — S3-compatible object storage for media uploads
 
 ## Services
 

@@ -9,7 +9,12 @@ FROM minio/minio:${MINIO_VERSION}
 # The start command MUST use a hardcoded port. Port 8080 is the default
 # MinIO API port; 9001 is the console.
 #
-# Cache-bust: 5
+# Cache-bust: 6
+#
+# The upstream minio image ships an ENTRYPOINT wrapper that swallows the
+# arguments Railway passes through as a start command, which makes the
+# container print `minio --help` and exit. Reset ENTRYPOINT and pin the
+# server invocation in an exec-form CMD so the args always survive.
 
 VOLUME /data
 
@@ -19,4 +24,5 @@ HEALTHCHECK --interval=10s --timeout=3s --retries=5 --start-period=15s \
 EXPOSE 8080
 EXPOSE 9001
 
-CMD minio server /data --address 0.0.0.0:8080 --console-address 0.0.0.0:9001
+ENTRYPOINT []
+CMD ["minio", "server", "/data", "--address", "0.0.0.0:8080", "--console-address", "0.0.0.0:9001"]

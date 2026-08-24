@@ -5,8 +5,8 @@
     "isOptional": false
   },
   "REDIS_URL": {
-    "defaultValue": "redis://:${{redis.REDIS_PASSWORD}}@${{redis.RAILWAY_PRIVATE_DOMAIN}}:6379",
-    "description": "Redis connection URL. Auto-wired from the sibling 'redis' service via companion variable references.",
+    "defaultValue": "redis://${{redis.RAILWAY_PRIVATE_DOMAIN}}:6379",
+    "description": "Redis connection URL. Auto-wired from the sibling 'redis' service over Railway's project-isolated private network (no password needed).",
     "isOptional": false
   },
   "BUZZ_S3_ENDPOINT": {

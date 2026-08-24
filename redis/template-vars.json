@@ -1,7 +1,7 @@
 {
-  "REDIS_PASSWORD": {
-    "defaultValue": "${{secret(32)}}",
-    "description": "Redis password, auto-generated per deploy. The relay reads it via ${{redis.REDIS_PASSWORD}} in REDIS_URL, so rotating it here is picked up automatically on redeploy.",
-    "isOptional": false
+  "REDIS_URL": {
+    "defaultValue": "redis://${{redis.RAILWAY_PRIVATE_DOMAIN}}:6379",
+    "description": "Redis connection URL over Railway's private network. Redis runs unauthenticated because the private network is project-isolated and not publicly reachable.",
+    "isOptional": true
   }
 }

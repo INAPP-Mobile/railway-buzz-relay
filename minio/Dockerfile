@@ -9,7 +9,14 @@ FROM minio/minio:${MINIO_VERSION}
 # The start command MUST use a hardcoded port. Port 8080 is the default
 # MinIO API port; 9001 is the console.
 #
-# Cache-bust: 3
+# Cache-bust: 4
+
+# Install mc (MinIO Client) for bucket auto-creation
+ADD https://dl.min.io/client/mc/release/linux-amd64/mc /usr/local/bin/mc
+RUN chmod +x /usr/local/bin/mc
+
+COPY minio-entrypoint.sh /usr/local/bin/minio-entrypoint.sh
+RUN chmod +x /usr/local/bin/minio-entrypoint.sh
 
 VOLUME /data
 
@@ -19,4 +26,4 @@ HEALTHCHECK --interval=10s --timeout=3s --retries=5 --start-period=15s \
 EXPOSE 8080
 EXPOSE 9001
 
-CMD minio server /data --address 0.0.0.0:8080 --console-address 0.0.0.0:9001
+CMD ["/usr/local/bin/minio-entrypoint.sh"]

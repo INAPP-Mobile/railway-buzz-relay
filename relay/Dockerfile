@@ -111,15 +111,17 @@ EXPOSE 3000 8080 9102
 # Volume for git repos
 RUN mkdir -p /data/git && chown buzz:buzz /data/git
 
+COPY relay/docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
+RUN chmod +x /usr/local/bin/docker-entrypoint.sh
+
 # Healthcheck — bash /dev/tcp probe (no curl/wget in image)
 HEALTHCHECK --interval=10s --timeout=3s --retries=12 --start-period=30s \
   CMD bash -ec 'exec 3<>/dev/tcp/127.0.0.1/8080; printf "GET /_readiness HTTP/1.1\r\nHost: 127.0.0.1\r\nConnection: close\r\n\r\n" >&3; grep -q "200 OK" <&3'
 
-USER buzz:buzz
 WORKDIR /var/lib/buzz
 
 COPY --from=stripped-binaries /build/target/release/buzz-relay /usr/local/bin/buzz-relay
 COPY --from=stripped-binaries /build/target/release/buzz-admin /usr/local/bin/buzz-admin
 COPY --from=stripped-binaries /build/target/release/buzz-pair-relay /usr/local/bin/buzz-pair-relay
 
-ENTRYPOINT ["/usr/local/bin/buzz-relay"]
+ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]

@@ -1,17 +1,17 @@
 {
   "POSTGRES_USER": {
-    "defaultValue": "postgres",
-    "description": "Postgres superuser name. Used both for the running DB and as the credential prefix in the relay's DATABASE_URL.",
+    "defaultValue": "buzz",
+    "description": "Postgres superuser name. The relay reads it via ${{postgres.POSTGRES_USER}} in DATABASE_URL, so this value never needs to be duplicated by hand.",
     "isOptional": false
   },
   "POSTGRES_PASSWORD": {
-    "defaultValue": "postgres",
-    "description": "Postgres password. Default literal 'postgres' chosen so marketplace first-time deploys authenticate out of the box. Rotate this in the dashboard AND update the relay's DATABASE_URL to match before going to production.",
+    "defaultValue": "${{secret(32)}}",
+    "description": "Postgres password, auto-generated per deploy. The relay reads it via ${{postgres.POSTGRES_PASSWORD}} in DATABASE_URL, so rotating it here is picked up automatically on redeploy.",
     "isOptional": false
   },
   "POSTGRES_DB": {
     "defaultValue": "buzz",
-    "description": "Initial database created on first boot. MUST match the database name in the relay's DATABASE_URL (path component: /buzz).",
+    "description": "Initial database created on first boot. The relay reads it via ${{postgres.POSTGRES_DB}} in DATABASE_URL.",
     "isOptional": false
   },
   "PGDATA": {

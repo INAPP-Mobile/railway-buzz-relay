@@ -105,8 +105,9 @@ ENV BUZZ_WEB_DIR=/srv/buzz/web \
     BUZZ_GIT_REPO_PATH=/data/git \
     RUST_LOG=buzz_relay=info,buzz_db=info,buzz_auth=info,buzz_pubsub=info,tower_http=info
 
-# 3000: app (WS + REST)  ·  8080: /_liveness, /_readiness  ·  9102: /metrics
-EXPOSE 3000 8080 9102
+# 8080: /_liveness, /_readiness  ·  3000: app (WS + REST)  ·  9102: /metrics
+# 8080 MUST be first so Railway's healthcheck probes the health server port.
+EXPOSE 8080 3000 9102
 
 # Volume for git repos
 RUN mkdir -p /data/git && chown buzz:buzz /data/git

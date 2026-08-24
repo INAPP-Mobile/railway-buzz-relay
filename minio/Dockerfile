@@ -1,4 +1,5 @@
-FROM minio/minio:latest
+ARG MINIO_VERSION=latest
+FROM minio/minio:${MINIO_VERSION}
 
 # MinIO sibling service for Buzz Relay.
 # Root credentials (MINIO_ROOT_USER, MINIO_ROOT_PASSWORD) are injected
@@ -8,7 +9,7 @@ FROM minio/minio:latest
 # The start command MUST use a hardcoded port. Port 8080 is the default
 # MinIO API port; 9001 is the console.
 #
-# Cache-bust: 2
+# Cache-bust: 3
 
 VOLUME /data
 

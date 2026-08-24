@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" fill="none">
+  <defs>
+    <linearGradient id="buzz-og-bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#1a1a2e"/>
+      <stop offset="100%" stop-color="#16213e"/>
+    </linearGradient>
+    <linearGradient id="buzz-og-accent" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#FF6B35"/>
+      <stop offset="100%" stop-color="#F7931E"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#buzz-og-bg)"/>
+  <!-- Relay tower -->
+  <g transform="translate(600,315)">
+    <rect x="-20" y="-120" width="40" height="200" rx="8" fill="url(#buzz-og-accent)"/>
+    <circle cx="0" cy="-140" r="16" fill="url(#buzz-og-accent)"/>
+    <!-- Left arcs -->
+    <path d="M-60,-80 A120,120 0 0,0 -60,60" stroke="url(#buzz-og-accent)" stroke-width="24" fill="none" opacity="0.5"/>
+    <path d="M-110,-50 A170,170 0 0,0 -110,30" stroke="url(#buzz-og-accent)" stroke-width="24" fill="none" opacity="0.3"/>
+    <!-- Right arcs -->
+    <path d="M60,-80 A120,120 0 0,1 60,60" stroke="url(#buzz-og-accent)" stroke-width="24" fill="none" opacity="0.5"/>
+    <path d="M110,-50 A170,170 0 0,1 110,30" stroke="url(#buzz-og-accent)" stroke-width="24" fill="none" opacity="0.3"/>
+    <!-- Base -->
+    <rect x="-70" y="80" width="140" height="30" rx="6" fill="url(#buzz-og-accent)"/>
+  </g>
+</svg>

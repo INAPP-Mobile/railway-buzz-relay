@@ -1,0 +1,57 @@
+{
+  "DATABASE_URL": {
+    "defaultValue": "postgresql://${{postgres.POSTGRES_USER}}:${{postgres.POSTGRES_PASSWORD}}@postgres.railway.internal:5432/${{postgres.POSTGRES_DB}}",
+    "description": "PostgreSQL connection URL. Auto-wired from the sibling 'postgres' service via companion variable references.",
+    "isOptional": false
+  },
+  "REDIS_URL": {
+    "defaultValue": "redis://:${{redis.REDIS_PASSWORD}}@redis.railway.internal:6379",
+    "description": "Redis connection URL. Auto-wired from the sibling 'redis' service via companion variable references.",
+    "isOptional": false
+  },
+  "BUZZ_S3_ENDPOINT": {
+    "defaultValue": "http://minio.railway.internal:9000",
+    "description": "S3 endpoint for media storage. Points to the sibling 'minio' service.",
+    "isOptional": false
+  },
+  "BUZZ_S3_ACCESS_KEY": {
+    "defaultValue": "${{minio.MINIO_ROOT_USER}}",
+    "description": "S3 access key. Auto-wired from the sibling 'minio' service.",
+    "isOptional": false
+  },
+  "BUZZ_S3_SECRET_KEY": {
+    "defaultValue": "${{minio.MINIO_ROOT_PASSWORD}}",
+    "description": "S3 secret key. Auto-wired from the sibling 'minio' service.",
+    "isOptional": false
+  },
+  "BUZZ_S3_BUCKET": {
+    "defaultValue": "buzz-media",
+    "description": "S3 bucket name for media storage.",
+    "isOptional": false
+  },
+  "RELAY_OWNER_PUBKEY": {
+    "defaultValue": "",
+    "description": "Optional: Nostr public key (hex) that owns this relay. If empty, the relay runs in open mode.",
+    "isOptional": true
+  },
+  "BUZZ_RELAY_PRIVATE_KEY": {
+    "defaultValue": "${{secret(64)}}",
+    "description": "Nostr private key (hex) for the relay. Auto-generated if not provided.",
+    "isOptional": false
+  },
+  "BUZZ_GIT_HOOK_HMAC_SECRET": {
+    "defaultValue": "${{secret(32)}}",
+    "description": "HMAC secret for git hook verification. Auto-generated.",
+    "isOptional": false
+  },
+  "BUZZ_AUTO_MIGRATE": {
+    "defaultValue": "true",
+    "description": "Automatically run database migrations on startup.",
+    "isOptional": true
+  },
+  "BUZZ_GIT_CONFORMANCE_PROBE": {
+    "defaultValue": "true",
+    "description": "Enable git conformance probe on startup.",
+    "isOptional": true
+  }
+}

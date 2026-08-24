@@ -1,0 +1,10 @@
+{
+  "MINIO_ROOT_USER": {
+    "value": "minioadmin",
+    "description": "MinIO root (admin) username. Referenced by the relay as BUZZ_S3_ACCESS_KEY via ${{minio.MINIO_ROOT_USER}}."
+  },
+  "MINIO_ROOT_PASSWORD": {
+    "value": "${{secret(32)}}",
+    "description": "MinIO root password — auto-generated at deploy time. Referenced by the relay as BUZZ_S3_SECRET_KEY via ${{minio.MINIO_ROOT_PASSWORD}}."
+  }
+}

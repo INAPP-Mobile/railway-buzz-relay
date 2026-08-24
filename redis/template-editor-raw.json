@@ -1,0 +1,6 @@
+{
+  "REDIS_PASSWORD": {
+    "value": "redis",
+    "description": "Redis password. Default literal 'redis' chosen so marketplace first-time deploys authenticate against the relay's literal REDIS_URL out of the box. Rotate this in the dashboard AND update the relay's REDIS_URL to match before going to production."
+  }
+}

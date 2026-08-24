@@ -1,0 +1,46 @@
+{
+  "DATABASE_URL": {
+    "value": "postgresql://postgres:***@postgres.railway.internal:5432/buzz",
+    "description": "PostgreSQL connection URL to the sibling 'postgres' service (postgres:16-alpine). Literal credentials match the defaults in postgres/template-vars.json so marketplace first-time deploys authenticate out of the box."
+  },
+  "REDIS_URL": {
+    "value": "redis://:***@redis.railway.internal:6379",
+    "description": "Redis connection URL to the sibling 'redis' service. Literal credentials match the defaults in redis/template-vars.json so marketplace first-time deploys authenticate out of the box."
+  },
+  "BUZZ_S3_ENDPOINT": {
+    "value": "http://minio.railway.internal:9000",
+    "description": "S3 endpoint for media storage. Points to the sibling 'minio' service."
+  },
+  "BUZZ_S3_ACCESS_KEY": {
+    "value": "minioadmin",
+    "description": "S3 access key. Matches the default in minio/template-vars.json."
+  },
+  "BUZZ_S3_SECRET_KEY": {
+    "value": "minioadmin",
+    "description": "S3 secret key. Matches the default in minio/template-vars.json."
+  },
+  "BUZZ_S3_BUCKET": {
+    "value": "buzz-media",
+    "description": "S3 bucket name for media storage."
+  },
+  "RELAY_OWNER_PUBKEY": {
+    "value": "",
+    "description": "Optional: Nostr public key (hex) that owns this relay. If empty, the relay runs in open mode."
+  },
+  "BUZZ_RELAY_PRIVATE_KEY": {
+    "value": "${{secret(64)}}",
+    "description": "Nostr private key (hex) for the relay. Auto-generated if not provided."
+  },
+  "BUZZ_GIT_HOOK_HMAC_SECRET": {
+    "value": "${{secret(32)}}",
+    "description": "HMAC secret for git hook verification. Auto-generated."
+  },
+  "BUZZ_AUTO_MIGRATE": {
+    "value": "true",
+    "description": "Automatically run database migrations on startup."
+  },
+  "BUZZ_GIT_CONFORMANCE_PROBE": {
+    "value": "true",
+    "description": "Enable git conformance probe on startup."
+  }
+}

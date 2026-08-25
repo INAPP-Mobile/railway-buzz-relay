@@ -6,7 +6,10 @@
   },
   "deploy": {
     "healthcheckPath": "/",
-    "healthcheckTimeout": 10,
+    "healthcheckTimeout": 5,
+    "startupBehavior": {
+      "type": "ONESHOT"
+    },
     "restartPolicyType": "NEVER",
     "restartPolicyMaxRetries": 0
   }

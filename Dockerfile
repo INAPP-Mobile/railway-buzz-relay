@@ -3,7 +3,7 @@
 # Railway build for Buzz Relay — single-stage cargo build.
 # Clones upstream buzz repo and compiles from source.
 
-FROM rust:1.95-bookworm AS builder
+FROM rust:1.96.1-bookworm AS builder
 WORKDIR /build
 RUN apt-get update && apt-get install -y git ca-certificates
 RUN git clone --depth 1 --branch main https://github.com/block/buzz.git .
@@ -23,7 +23,8 @@ RUN pnpm -C web build && pnpm -C admin-web build
 
 FROM debian:bookworm-slim
 RUN apt-get update && apt-get install -y ca-certificates curl git openssl \
-    && rm -rf /var/lib/apt/lists/*
+    && rm -rf /var/lib/apt/lists/* \
+    && useradd -r -U -d /var/lib/buzz -s /bin/sh buzz
 
 COPY --from=web-builder /build/web/dist /srv/buzz/web
 COPY --from=web-builder /build/admin-web/dist /srv/buzz/admin-web
@@ -39,7 +40,7 @@ ENV BUZZ_WEB_DIR=/srv/buzz/web \
 
 EXPOSE 8080 3000 9102
 
-RUN mkdir -p /data/git
+RUN mkdir -p /data/git && chown buzz:buzz /data/git
 
 COPY relay/docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
 RUN chmod +x /usr/local/bin/docker-entrypoint.sh

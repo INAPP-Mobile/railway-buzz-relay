@@ -14,10 +14,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 # Copy minio binary from upstream (bypasses the upstream entrypoint wrapper)
 COPY --from=upstream /usr/bin/minio /usr/bin/minio
 
-# Custom entrypoint that runs minio directly
-COPY minio/entrypoint.sh /usr/local/bin/entrypoint.sh
-RUN chmod +x /usr/local/bin/entrypoint.sh
-
 VOLUME /data
 
 HEALTHCHECK --interval=10s --timeout=3s --retries=5 --start-period=15s \
@@ -26,5 +22,6 @@ HEALTHCHECK --interval=10s --timeout=3s --retries=5 --start-period=15s \
 EXPOSE 8080
 EXPOSE 9001
 
-ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
-CMD ["server", "/data", "--address", "0.0.0.0:8080", "--console-address", "0.0.0.0:9001"]
+# Clear any inherited ENTRYPOINT and use exec-form CMD directly
+ENTRYPOINT []
+CMD ["minio", "server", "/data", "--address", "0.0.0.0:8080", "--console-address", "0.0.0.0:9001"]

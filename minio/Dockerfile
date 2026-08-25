@@ -24,4 +24,4 @@ EXPOSE 9001
 
 # Clear any inherited ENTRYPOINT and use exec-form CMD directly
 ENTRYPOINT []
-CMD ["minio", "server", "/data", "--address", "0.0.0.0:8080", "--console-address", "0.0.0.0:9001"]
+CMD ["/usr/bin/minio", "server", "/data", "--address", "0.0.0.0:8080", "--console-address", "0.0.0.0:9001"]

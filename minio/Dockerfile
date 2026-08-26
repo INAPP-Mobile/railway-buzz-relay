@@ -17,7 +17,7 @@ COPY --from=upstream /usr/bin/minio /usr/bin/minio
 COPY minio-entrypoint.sh /minio-entrypoint.sh
 RUN chmod +x /minio-entrypoint.sh
 
-VOLUME /data
+# NOTE: no Dockerfile VOLUME — Railway rejects it; volume is attached via railway.json
 
 HEALTHCHECK --interval=10s --timeout=3s --retries=5 --start-period=15s \
   CMD curl -f http://127.0.0.1:8080/minio/health/live || exit 1

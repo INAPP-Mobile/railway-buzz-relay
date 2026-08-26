@@ -76,7 +76,7 @@ All variables auto-populated from companion services:
 
 Click the button below to deploy. No configuration needed:
 
-[![Deploy on Railway](https://railway.app/button.svg)](https://railway.com/deploy/buzz-relay-1)
+[![Deploy on Railway](https://railway.app/button.svg)](https://railway.com/deploy/_UELh2)
 
 ## Post-Deploy
 

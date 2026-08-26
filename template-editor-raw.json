@@ -64,8 +64,8 @@
     "description": "HTTP port for the relay."
   },
   "RELAY_URL": {
-    "value": "https://${{RAILWAY_PUBLIC_DOMAIN}}",
-    "description": "Public URL of this relay. Used as the deployment host identity \u2014 communities bind to it."
+    "value": "wss://${{RAILWAY_PUBLIC_DOMAIN}}",
+    "description": "WebSocket URL of this relay (bare wss:// origin, NO path). Must match the scheme clients put in NIP-42 auth relay tags — https:// here makes every client AUTH fail with 'relay url mismatch'."
   },
   "BUZZ_MEDIA_BASE_URL": {
     "value": "https://${{RAILWAY_PUBLIC_DOMAIN}}/media",

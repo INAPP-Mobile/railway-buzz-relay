@@ -63,5 +63,30 @@
     "defaultValue": "false",
     "description": "Run the git conformance probe on startup. Disabled by default because it requires the S3 bucket to already exist; the bucket is auto-created on first media use.",
     "isOptional": false
+  },
+  "RELAY_URL": {
+    "value": "https://${{RAILWAY_PUBLIC_DOMAIN}}",
+    "description": "Public URL of this relay. Used as the deployment host identity \u2014 communities bind to it.",
+    "defaultValue": "https://${{RAILWAY_PUBLIC_DOMAIN}}"
+  },
+  "BUZZ_MEDIA_BASE_URL": {
+    "value": "https://${{RAILWAY_PUBLIC_DOMAIN}}/media",
+    "description": "Public base URL for media attachments.",
+    "defaultValue": "https://${{RAILWAY_PUBLIC_DOMAIN}}/media"
+  },
+  "BUZZ_MEDIA_SERVER_DOMAIN": {
+    "value": "${{RAILWAY_PUBLIC_DOMAIN}}",
+    "description": "Public domain used for media server URLs.",
+    "defaultValue": "${{RAILWAY_PUBLIC_DOMAIN}}"
+  },
+  "BUZZ_CORS_ORIGINS": {
+    "value": "https://${{RAILWAY_PUBLIC_DOMAIN}}",
+    "description": "Allowed CORS origin for web clients.",
+    "defaultValue": "https://${{RAILWAY_PUBLIC_DOMAIN}}"
+  },
+  "BUZZ_S3_ADDRESSING_STYLE": {
+    "value": "path",
+    "description": "MinIO sibling uses path-style S3 addressing (required for private-network hostnames).",
+    "defaultValue": "path"
   }
 }

@@ -9,7 +9,7 @@ RUN apt-get update && apt-get install -y git ca-certificates
 RUN git clone --depth 1 --branch main https://github.com/block/buzz.git .
 RUN cargo build --release -p buzz-relay -p buzz-admin -p buzz-pair-relay
 
-FROM node:24-bookworm-slim AS web-builder
+FROM node:25-bookworm-slim AS web-builder
 WORKDIR /build
 RUN corepack enable
 COPY --from=builder /build/package.json /build/pnpm-lock.yaml /build/pnpm-workspace.yaml ./

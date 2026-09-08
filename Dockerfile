@@ -3,7 +3,7 @@
 # Railway build for Buzz Relay — single-stage cargo build.
 # Clones upstream buzz repo and compiles from source.
 
-FROM rust:1.96.1-bookworm AS builder
+FROM rust:1.97.1-bookworm AS builder
 WORKDIR /build
 RUN apt-get update && apt-get install -y git ca-certificates
 RUN git clone --depth 1 --branch main https://github.com/block/buzz.git .

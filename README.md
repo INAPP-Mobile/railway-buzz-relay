@@ -33,7 +33,7 @@ Buzz Relay is a Nostr relay with built-in Git hosting over Nostr (NIP-89). It le
 | `relay` | ghcr.io/block/buzz:main | Nostr relay (buzz-relay binary) |
 | `postgres` | postgres:16-alpine | Database for relay state |
 | `redis` | redis:7-alpine | Pub/sub cache |
-| `minio` | minio/minio | S3-compatible media storage |
+| `minio` | RustFS (S3-compatible, MinIO-compatible) | Media storage |
 
 ## Environment Variables
 

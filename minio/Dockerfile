@@ -1,30 +1,40 @@
-ARG MINIO_VERSION=RELEASE.2025-09-07T16-13-09Z
+# MinIO's Docker Hub repository was deleted in 2026 — the upstream project was
+# archived and all published images removed. minio/minio:RELEASE.2025-09-07T16-13-09Z
+# now returns 404 from the Hub API, and dl.min.io answers 410 Gone, so this service
+# cannot be built from MinIO at all.
+#
+# RustFS is a drop-in S3-compatible replacement: same S3 API, same path-style
+# addressing, and it serves the same /minio/health/live endpoint. That means the
+# healthcheck, the relay's BUZZ_S3_* wiring, and every ${{minio.MINIO_ROOT_*}}
+# companion reference stay valid unchanged.
+#
+# Deliberately NO custom entrypoint or CMD override. A wrapper that touched the
+# command (or mapped MINIO_ROOT_* onto RUSTFS_*) failed every Railway deployment;
+# the bare upstream image deploys and logs normally. RustFS natively reads
+# MINIO_ROOT_USER and MINIO_ROOT_PASSWORD as credential sources, so the template's
+# existing variables pass straight through.
+#
+# buzz-relay specifics: MINIO_ADDRESS=0.0.0.0:8080 is already a recognized RustFS
+# alias for RUSTFS_ADDRESS, so the listen port stays 8080 with no wrapper. The
+# relay creates its bucket through the S3 API at first run (no pre-made
+# /data/buzz-media directory is needed).
+FROM rustfs/rustfs:latest
 
-# Stage 1: Get minio binary from upstream
-FROM minio/minio:${MINIO_VERSION} AS upstream
+# Run as root, overriding the image's default `rustfs` user. Railway mounts volumes
+# root-owned, and as uid 10001 rustfs cannot write its metadata directory: it dies at
+# startup with "Permission denied (os error 13)". This USER change is the only
+# customization the image needs.
+USER root
 
-# Stage 2: Build runtime image with clean entrypoint
-FROM debian:bookworm-slim
+ENV RUSTFS_VOLUMES=/data \
+    RUSTFS_ADDRESS=0.0.0.0:8080 \
+    RUSTFS_CONSOLE_ADDRESS=0.0.0.0:9001 \
+    RUSTFS_CONSOLE_ENABLE=true
 
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    ca-certificates \
-    curl \
-    && rm -rf /var/lib/apt/lists/*
-
-# Copy minio binary from upstream (bypasses the upstream entrypoint wrapper)
-COPY --from=upstream /usr/bin/minio /usr/bin/minio
-
-COPY minio-entrypoint.sh /minio-entrypoint.sh
-RUN chmod +x /minio-entrypoint.sh
-
-# NOTE: no Dockerfile VOLUME — Railway rejects it; volume is attached via railway.json
-
+# No Dockerfile VOLUME directive — Railway rejects it; the volume is attached via
+# railway.json at /data, which matches RUSTFS_VOLUMES above.
 HEALTHCHECK --interval=10s --timeout=3s --retries=5 --start-period=15s \
   CMD curl -f http://127.0.0.1:8080/minio/health/live || exit 1
 
 EXPOSE 8080
 EXPOSE 9001
-
-# CMD (not ENTRYPOINT) so Railway's startCommand replaces it cleanly instead
-# of being appended as arguments to the wrapper script.
-CMD ["/minio-entrypoint.sh"]

@@ -24,7 +24,7 @@ Buzz Relay is a Nostr relay with built-in Git hosting over Nostr (NIP-89). It le
 
 - **PostgreSQL** — database for relay state and metadata
 - **Redis** — pub/sub cache for real-time event distribution
-- **MinIO** — S3-compatible object storage for media uploads
+- **RustFS** — S3-compatible object storage (MinIO-compatible) for media uploads
 
 ## Services
 
@@ -60,8 +60,8 @@ All variables auto-populated from companion services:
           +---------------+---------------+
           |               |               |
    +------+------+ +-----+------+ +------+------+
-   |   postgres   | |   redis    | |    minio    |
-   |  postgres:16 | |  redis:7   | |   minio     |
+   |   postgres   | |   redis    | |   rustfs    |
+   |  postgres:16 | |  redis:7   | |   rustfs    |
    +--------------+ +------------+ +-------------+
 ```
 
@@ -70,7 +70,7 @@ All variables auto-populated from companion services:
 - Relay: `/_readiness` on port 8080
 - Postgres: built-in
 - Redis: `redis-cli ping`
-- Minio: `/minio/health/live`
+- RustFS: `/minio/health/live` (endpoint preserved for compatibility)
 
 ## Deployment
 
@@ -83,11 +83,11 @@ Click the button below to deploy. No configuration needed:
 1. Relay is accessible at your Railway public domain
 2. Nostr clients can connect via `wss://<your-domain>`
 3. Git repos are persisted at `/data/git` on the relay volume
-4. Media uploads go to the MinIO bucket
+4. Media uploads go to the RustFS bucket (S3 API compatible)
 
 ## Notes
 
 - Default database credentials: `postgres` / `postgres` (rotate in dashboard before production)
 - Default Redis password: `redis` (rotate in dashboard before production)
-- Default MinIO credentials: `minioadmin` / auto-generated password (rotate in dashboard before production)
+- RustFS credentials: `minioadmin` / auto-generated password (rotate in dashboard before production)
 - Nostr relay private key is auto-generated on first deploy

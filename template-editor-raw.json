@@ -23,6 +23,14 @@
     "value": "buzz-media",
     "description": "S3 bucket name for media storage."
   },
+  "MINIO_ROOT_USER": {
+    "value": "${{minio.MINIO_ROOT_USER}}",
+    "description": "MinIO/RustFS root username, wired to the relay so docker-entrypoint.sh can auto-create the buzz-media bucket on first boot (required for the A3 conformance gate to pass on fresh installs)."
+  },
+  "MINIO_ROOT_PASSWORD": {
+    "value": "${{minio.MINIO_ROOT_PASSWORD}}",
+    "description": "MinIO/RustFS root password, wired to the relay so docker-entrypoint.sh can auto-create the buzz-media bucket on first boot (required for the A3 conformance gate to pass on fresh installs)."
+  },
   "RELAY_OWNER_PUBKEY": {
     "value": "",
     "description": "Optional: Nostr public key (hex) that owns this relay. If empty, the relay runs in open mode."

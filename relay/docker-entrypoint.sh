@@ -37,6 +37,7 @@ if [ -n "$BUZZ_S3_ENDPOINT" ] && [ -n "$MINIO_ROOT_USER" ] && [ -n "$MINIO_ROOT_
 
       HTTP_CODE=$(curl -s -o /tmp/bucket_put_resp -w '%{http_code}' \
         -X PUT \
+        -H "x-amz-content-sha256: UNSIGNED-PAYLOAD" \
         --aws-sigv4 "aws:amz:us-east-1:s3" \
         --user "${MINIO_ROOT_USER}:${MINIO_ROOT_PASSWORD}" \
         "${BUZZ_S3_ENDPOINT}/${BUCKET}" 2>/dev/null)

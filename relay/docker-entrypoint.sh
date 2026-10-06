@@ -35,7 +35,7 @@ if [ -n "$BUZZ_S3_ENDPOINT" ] && [ -n "$MINIO_ROOT_USER" ] && [ -n "$MINIO_ROOT_
         exit 0
       fi
 
-      HTTP_CODE=$(curl -s -o /dev/null -w '%{http_code}' \
+      HTTP_CODE=$(curl -s -o /tmp/bucket_put_resp -w '%{http_code}' \
         -X PUT \
         --aws-sigv4 "aws:amz:us-east-1:s3" \
         --user "${MINIO_ROOT_USER}:${MINIO_ROOT_PASSWORD}" \
@@ -45,6 +45,9 @@ if [ -n "$BUZZ_S3_ENDPOINT" ] && [ -n "$MINIO_ROOT_USER" ] && [ -n "$MINIO_ROOT_
         echo "Bucket ${BUCKET} created."
         exit 0
       fi
+
+      PUT_DEBUG=$(head -c 300 /tmp/bucket_put_resp 2>/dev/null | tr -d '\n')
+      echo "Bucket create attempt ${i}: HTTP ${HTTP_CODE} $(test -n "$PUT_DEBUG" && echo "$PUT_DEBUG")"
 
       if [ "$i" -eq 30 ]; then
         echo "WARNING: Could not create bucket ${BUCKET} after 30 attempts. Continuing without bucket."

@@ -28,7 +28,8 @@ if [ -n "$BUZZ_S3_ENDPOINT" ] && [ -n "$MINIO_ROOT_USER" ] && [ -n "$MINIO_ROOT_
   (
     for i in $(seq 1 30); do
       if curl -sf -o /dev/null \
-        -u "${MINIO_ROOT_USER}:${MINIO_ROOT_PASSWORD}" \
+        --aws-sigv4 "aws:amz:us-east-1:s3" \
+        --user "${MINIO_ROOT_USER}:${MINIO_ROOT_PASSWORD}" \
         "${BUZZ_S3_ENDPOINT}/${BUCKET}" 2>/dev/null; then
         echo "Bucket ${BUCKET} already exists."
         exit 0
@@ -36,7 +37,8 @@ if [ -n "$BUZZ_S3_ENDPOINT" ] && [ -n "$MINIO_ROOT_USER" ] && [ -n "$MINIO_ROOT_
 
       HTTP_CODE=$(curl -s -o /dev/null -w '%{http_code}' \
         -X PUT \
-        -u "${MINIO_ROOT_USER}:${MINIO_ROOT_PASSWORD}" \
+        --aws-sigv4 "aws:amz:us-east-1:s3" \
+        --user "${MINIO_ROOT_USER}:${MINIO_ROOT_PASSWORD}" \
         "${BUZZ_S3_ENDPOINT}/${BUCKET}" 2>/dev/null)
 
       if [ "$HTTP_CODE" = "200" ] || [ "$HTTP_CODE" = "201" ]; then

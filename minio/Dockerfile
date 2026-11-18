@@ -18,7 +18,7 @@
 # alias for RUSTFS_ADDRESS, so the listen port stays 8080 with no wrapper. The
 # relay creates its bucket through the S3 API at first run (no pre-made
 # /data/buzz-media directory is needed).
-FROM rustfs/rustfs:latest
+FROM rustfs/rustfs:1.0.6
 
 # Run as root, overriding the image's default `rustfs` user. Railway mounts volumes
 # root-owned, and as uid 10001 rustfs cannot write its metadata directory: it dies at

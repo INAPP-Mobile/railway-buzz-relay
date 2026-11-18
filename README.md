@@ -81,7 +81,7 @@ Click the button below to deploy. No configuration needed:
 ## Post-Deploy
 
 1. Relay is accessible at your Railway public domain
-2. Nostr clients can connect via `wss://<your-domain>`
+2. Nostr clients can connect via `wss://{your-domain}`
 3. Git repos are persisted at `/data/git` on the relay volume
 4. Media uploads go to the RustFS bucket (S3 API compatible)
 
